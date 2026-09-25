@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>NSMIMS ED-PREM — Interview Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1F4E79; --navy-dark:#163a5c;
+    --r1:#A8C1E0; --r2:#7FA5D1; --r3:#6690C6; --r4:#2F63A0; --r5:#1F4E79;
+    --r-text-dark:#1B2733;
+    --bg:#F5F8FC; --card:#FFFFFF; --border:#DCE4EE; --text:#1B2733; --muted:#5A6878;
+    --ok:#2E7D4F; --warn:#B23A3A;
+    --p1:#C0392B; --p2:#E07B1A; --p3:#D4B106; --p4:#2F63A0;
+    --font-head:'Lexend',-apple-system,sans-serif; --font-body:'Source Sans 3',-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--bg); color:var(--text); font-family:var(--font-body),-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.step-title,.rec-name,.btn,.area-btn .plabel,.rid{ font-family:var(--font-head),-apple-system,sans-serif; }
+  .ml{ font-family:"Noto Sans Malayalam","Meera",-apple-system,sans-serif; color:#4B5A6B; }
+  #root{ min-height:100vh; display:flex; flex-direction:column; }
+  .wrap{ max-width:640px; margin:0 auto; width:100%; padding:16px 16px 100px; flex:1; }
+
+  .topbar{ position:sticky; top:0; background:#fff; border-bottom:1px solid var(--border); z-index:10; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; }
+  .topbar h1{ font-size:16px; margin:0; color:var(--navy); font-weight:700; }
+  .topbar .sub{ font-size:11.5px; color:var(--muted); margin-top:1px; }
+  .icon-btn{ width:44px; height:44px; border-radius:10px; border:1px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; color:var(--navy); }
+  .icon-btn:active{ background:#EEF3F8; }
+
+  .fab{ position:fixed; right:18px; bottom:24px; width:58px; height:58px; border-radius:50%; background:var(--navy); color:#fff; font-size:28px; border:none; box-shadow:0 8px 20px rgba(31,78,121,0.35); cursor:pointer; z-index:20; }
+  .fab:active{ background:var(--navy-dark); transform:scale(0.96); }
+
+  .rec-card{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin-bottom:10px; cursor:pointer; }
+  .rec-card:active{ background:#F7FAFD; }
+  .rec-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .rec-name{ font-weight:700; font-size:15px; color:var(--text); }
+  .rec-meta{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .area-chip{ font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:20px; color:#fff; white-space:nowrap; }
+  .empty-state{ text-align:center; color:var(--muted); padding:70px 20px; font-size:14px; line-height:1.6; }
+  .day-head{ font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; margin:18px 0 8px; }
+  .day-head:first-child{ margin-top:4px; }
+
+  .step-title{ font-size:19px; font-weight:700; color:var(--navy); margin:6px 0 2px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; font-weight:600; }
+  .field input[type=text], .field input[type=date], .field input[type=time], .field input[type=tel], .field select, .field textarea{
+    width:100%; padding:12px 13px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--text);
+  }
+  .field textarea{ resize:vertical; min-height:64px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:2px solid var(--navy); outline-offset:1px; border-color:var(--navy); }
+  .phone-row{ display:flex; align-items:stretch; }
+  .phone-prefix{ background:#F0F4F9; border:1.5px solid var(--border); border-right:none; border-radius:10px 0 0 10px; padding:0 12px; font-size:15px; color:var(--muted); font-weight:700; display:flex; align-items:center; white-space:nowrap; }
+  .phone-row input{ border-radius:0 10px 10px 0; }
+  .seg{ display:flex; gap:8px; }
+  .seg button{ flex:1; min-height:44px; padding:13px 11px; border-radius:10px; border:1.5px solid var(--border); background:#fff; font-size:14.5px; font-weight:600; color:var(--text); cursor:pointer; }
+  .seg button.active{ background:var(--navy); border-color:var(--navy); color:#fff; }
+  .dt-row{ display:flex; gap:10px; }
+
+  .area-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px; }
+  .area-btn{ border-radius:12px; border:2px solid var(--border); background:#fff; padding:14px 10px; text-align:left; cursor:pointer; }
+  .area-btn .pnum{ font-size:11px; font-weight:700; color:#fff; display:inline-block; padding:2px 8px; border-radius:20px; margin-bottom:6px; }
+  .area-btn .plabel{ font-size:13.5px; font-weight:600; color:var(--text); }
+  .area-btn.sel{ border-color:var(--navy); background:#F3F8FD; box-shadow:0 2px 10px rgba(31,78,121,0.12); }
+
+  .item-card{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 16px 14px; margin-bottom:14px; }
+  .item-text-en{ font-size:15px; line-height:1.4; color:var(--text); font-weight:500; }
+  .item-text-ml{ font-size:13.5px; line-height:1.5; margin-top:4px; }
+  .rate-row{ display:flex; gap:6px; margin-top:13px; }
+  .rate-btn{ flex:1; aspect-ratio:1/1; border-radius:11px; border:1.5px solid var(--border); background:#fff; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700; color:var(--muted); cursor:pointer; min-height:44px; min-width:44px; }
+  .rate-btn.na{ font-size:11px; font-weight:700; }
+  .rate-btn:active{ transform:scale(0.94); }
+  .rate-btn[data-v="1"].sel{ background:var(--r1); border-color:var(--r1); color:#fff; }
+  .rate-btn[data-v="2"].sel{ background:var(--r2); border-color:var(--r2); color:#fff; }
+  .rate-btn[data-v="3"].sel{ background:var(--r3); border-color:var(--r3); color:#fff; }
+  .rate-btn[data-v="4"].sel{ background:var(--r4); border-color:var(--r4); color:#fff; }
+  .rate-btn[data-v="5"].sel{ background:var(--r5); border-color:var(--r5); color:#fff; }
+  .rate-btn.na.sel{ background:var(--muted); border-color:var(--muted); color:#fff; }
+  .rate-btn[data-v="1"].sel, .rate-btn[data-v="2"].sel, .rate-btn[data-v="3"].sel{ color:var(--r-text-dark); }
+  .legend-strip{ font-size:10.5px; color:var(--muted); padding:0 2px; margin-top:16px; line-height:1.7; }
+
+  .freetext-box{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .freetext-box h3{ font-size:15px; margin:0 0 2px; color:var(--navy); }
+
+  .progress-bar-outer{ position:sticky; top:0; background:var(--bg); z-index:9; padding:12px 16px 8px; max-width:640px; margin:0 auto; width:100%; }
+  .progress-track{ height:6px; background:var(--border); border-radius:4px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--navy); border-radius:4px; transition:width .25s ease; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:6px; }
+
+  .nav-bar{ position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border); padding:12px 18px calc(12px + env(safe-area-inset-bottom)); display:flex; gap:10px; justify-content:center; box-shadow:0 -4px 16px rgba(0,0,0,0.04); }
+  .nav-bar .inner{ max-width:640px; width:100%; display:flex; gap:10px; }
+  .btn{ padding:13px 20px; border-radius:11px; font-size:15px; font-weight:700; border:none; cursor:pointer; flex:1; }
+  .btn-primary{ background:var(--navy); color:#fff; }
+  .btn-primary:active{ background:var(--navy-dark); }
+  .btn-ghost{ background:#fff; color:var(--navy); border:1.5px solid var(--border); flex:0 0 96px; }
+  .btn-danger{ background:#fff; color:var(--warn); border:1.5px solid #F0C6C6; }
+  .btn-full{ width:100%; }
+
+  .section-h{ font-size:12.5px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.4px; margin:22px 0 8px; }
+  .kv{ display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid #EEF1F5; font-size:14px; }
+  .kv .k{ color:var(--muted); white-space:nowrap; }
+  .kv .v{ text-align:right; }
+  .back{ color:var(--navy); font-weight:600; font-size:14px; cursor:pointer; }
+  .toast{ position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#1B2733; color:#fff; padding:10px 18px; border-radius:10px; font-size:13px; z-index:50; max-width:85%; text-align:center; }
+  .settings-card{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .settings-card h3{ font-size:14.5px; margin:0 0 4px; color:var(--navy); }
+  .settings-card p{ font-size:12.5px; color:var(--muted); margin:4px 0 12px; line-height:1.5; }
+  .status-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+  .hidden-file{ display:none; }
+  .week-chart{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:16px; }
+  .week-chart-title{ font-size:12.5px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:12px; }
+  .week-bars{ display:flex; justify-content:space-between; align-items:flex-end; gap:6px; height:90px; }
+  .week-bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end; }
+  .week-bar-track{ width:100%; max-width:28px; height:64px; display:flex; align-items:flex-end; }
+  .week-bar-fill{ width:100%; background:var(--navy); border-radius:5px 5px 0 0; min-height:3px; }
+  .week-bar-count{ font-size:11px; font-weight:700; color:var(--text); margin-top:4px; }
+  .week-bar-label{ font-size:10px; color:var(--muted); margin-top:1px; }
+  .domain-bar-row{ margin-bottom:12px; }
+  .domain-bar-label{ display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px; }
+  .domain-bar-label b{ color:var(--navy); }
+  .domain-bar-track{ height:16px; background:var(--bg); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .domain-bar-fill{ height:100%; background:var(--navy); border-radius:8px 0 0 8px; }
+  .q-row{ display:flex; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid #EEF1F5; font-size:13px; }
+  .q-row .qtext{ flex:1; }
+  .q-row .qmean{ font-weight:700; color:var(--navy); white-space:nowrap; }
+  .stats-table-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .stats-table{ border-collapse:collapse; width:100%; font-size:11.5px; white-space:nowrap; }
+  .stats-table th, .stats-table td{ padding:7px 8px; border-bottom:1px solid #EEF1F5; text-align:right; }
+  .stats-table th:first-child, .stats-table td:first-child{ text-align:left; position:sticky; left:0; background:var(--card); }
+  .stats-table th{ color:var(--muted); font-weight:700; font-size:10.5px; text-transform:uppercase; }
+  @media print{ .nav-bar,.fab,.topbar{ display:none !important; } body{ background:#fff; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<input type="file" id="importFile" class="hidden-file" accept="application/json" />
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+/* =========================================================
+   NSMIMS ED — PREM Interview Entry (staff-administered)
+   Single-user tool: social worker interviews patient/attendant
+   and enters responses herself. Offline-first, local storage
+   primary; on-demand Google Drive backup.
+   ========================================================= */
+
+const DOMAINS = [
+  { letter:"A", en:"Arrival & Access", ml:"എത്തിച്ചേരലും പ്രവേശനവും", items:[
+    { id:"A1", en:"Availability and accessibility of parking and wheelchair/mobility assistance", ml:"പാർക്കിംഗിന്റെയും വീൽചെയർ/ചലന സഹായത്തിന്റെയും ലഭ്യതയും സൗകര്യവും", na:true },
+    { id:"A2", en:"Courtesy and helpfulness of security and Info Desk staff", ml:"സെക്യൂരിറ്റിയുടെയും ഇൻഫോ ഡെസ്ക് ജീവനക്കാരുടെയും മര്യാദയും സഹായമനോഭാവവും", na:true },
+  ]},
+  { letter:"B", en:"Registration & Waiting", ml:"രജിസ്ട്രേഷനും കാത്തിരിപ്പും", items:[
+    { id:"B1", en:"Ease and speed of the registration/payment process", ml:"രജിസ്ട്രേഷൻ/പേയ്മെന്റ് നടപടിക്രമത്തിന്റെ എളുപ്പവും വേഗതയും", na:false },
+    { id:"B2", en:"Cleanliness, comfort, seating and refreshment availability in the waiting area", ml:"കാത്തിരിപ്പ് സ്ഥലത്തെ ശുചിത്വം, സൗകര്യം, ഇരിപ്പിടം, ലഘുഭക്ഷണ ലഭ്യത എന്നിവ", na:true },
+  ]},
+  { letter:"C", en:"Triage & Initial Assessment", ml:"ട്രയാജും പ്രാഥമിക വിലയിരുത്തലും", items:[
+    { id:"C1", en:"Promptness and attentiveness of the triage nurse to your concerns", ml:"നിങ്ങളുടെ ആശങ്കകളോടുള്ള ട്രയാജ് നഴ്സിന്റെ പെട്ടെന്നുള്ള പ്രതികരണവും ശ്രദ്ധയും", na:false },
+    { id:"C2", en:"Information given on your triage priority, expected waiting time, and the doctor who would assess you", ml:"നിങ്ങളുടെ ട്രയാജ് മുൻഗണന, പ്രതീക്ഷിക്കുന്ന കാത്തിരിപ്പ് സമയം, നിങ്ങളെ വിലയിരുത്തുന്ന ഡോക്ടർ എന്നിവയെക്കുറിച്ച് നൽകിയ വിവരങ്ങൾ", na:false },
+  ]},
+  { letter:"D", en:"Doctor Assessment", ml:"ഡോക്ടറുടെ വിലയിരുത്തൽ", items:[
+    { id:"D1", en:"Thoroughness of history-taking and review of relevant records", ml:"രോഗവിവരശേഖരണത്തിന്റെയും പ്രസക്തമായ രേഖകൾ പരിശോധിക്കുന്നതിന്റെയും സമഗ്രത", na:false },
+    { id:"D2", en:"Thoroughness of physical examination, conducted with dignity, privacy and respect", ml:"അന്തസ്സോടും സ്വകാര്യതയോടും ബഹുമാനത്തോടും കൂടി നടത്തിയ ശാരീരിക പരിശോധനയുടെ സമഗ്രത", na:false },
+    { id:"D3", en:"Clarity of explanation of your likely diagnosis, evaluation and treatment plan", ml:"നിങ്ങളുടെ സാധ്യതയുള്ള രോഗനിർണയം, വിലയിരുത്തൽ, ചികിത്സാ പദ്ധതി എന്നിവയെക്കുറിച്ചുള്ള വിശദീകരണത്തിന്റെ വ്യക്തത", na:false },
+    { id:"D4", en:"Promptness of treatment for your most concerning symptoms", ml:"നിങ്ങളെ ഏറ്റവും അലട്ടിയ ലക്ഷണങ്ങൾക്കുള്ള ചികിത്സയുടെ വേഗത", na:false },
+    { id:"D5", en:"You were given the opportunity to take part in decisions about your treatment", ml:"നിങ്ങളുടെ ചികിത്സയെക്കുറിച്ചുള്ള തീരുമാനങ്ങളിൽ പങ്കാളിയാകാൻ നിങ്ങൾക്ക് അവസരം നൽകി", na:true },
+  ]},
+  { letter:"E", en:"Nursing Care", ml:"നഴ്സിംഗ് പരിചരണം", items:[
+    { id:"E1", en:"Your nurse introduced themselves and explained how to reach them if needed", ml:"നിങ്ങളുടെ നഴ്സ് സ്വയം പരിചയപ്പെടുത്തുകയും ആവശ്യമെങ്കിൽ എങ്ങനെ ബന്ധപ്പെടാം എന്ന് വിശദീകരിക്കുകയും ചെയ്തു", na:false },
+    { id:"E2", en:"Promptness of nurses' response when assistance was requested", ml:"സഹായം ആവശ്യപ്പെട്ടപ്പോൾ നഴ്സുമാരുടെ പ്രതികരണത്തിന്റെ വേഗത", na:true },
+    { id:"E3", en:"Professionalism and skill in administering nursing procedures/medications", ml:"നഴ്സിംഗ് പ്രക്രിയകളും മരുന്നുകളും നൽകുന്നതിലെ പ്രൊഫഷണലിസവും വൈദഗ്ധ്യവും", na:true },
+    { id:"E4", en:"Regular reassessment of your pain/symptoms during your stay", ml:"താമസത്തിനിടെ നിങ്ങളുടെ വേദന/ലക്ഷണങ്ങൾ ആവർത്തിച്ച് വിലയിരുത്തിയത്", na:true },
+    { id:"E5", en:"Courtesy, compassion and respect shown by nurses", ml:"നഴ്സുമാർ കാണിച്ച മര്യാദയും കരുണയും ബഹുമാനവും", na:false },
+  ]},
+  { letter:"F", en:"Laboratory & Radiology", ml:"ലബോറട്ടറിയും റേഡിയോളജിയും", items:[
+    { id:"F1", en:"Laboratory and radiology services were efficient", ml:"ലബോറട്ടറി, റേഡിയോളജി സേവനങ്ങൾ കാര്യക്ഷമമായിരുന്നു", na:true },
+    { id:"F2", en:"You were kept informed about the progress of your investigations, and results were available within a reasonable time", ml:"നിങ്ങളുടെ പരിശോധനകളുടെ പുരോഗതി അറിയിച്ചു, ഫലങ്ങൾ ന്യായമായ സമയത്തിനുള്ളിൽ ലഭ്യമായി", na:true },
+    { id:"F3", en:"Investigation and treatment costs were explained clearly and charges were transparent", ml:"പരിശോധനയുടെയും ചികിത്സയുടെയും ചെലവുകൾ വ്യക്തമായി വിശദീകരിക്കുകയും നിരക്കുകൾ സുതാര്യമായിരിക്കുകയും ചെയ്തു", na:true },
+  ]},
+  { letter:"G", en:"Emergency Department Environment", ml:"എമർജൻസി വിഭാഗത്തിന്റെ പരിസ്ഥിതി", items:[
+    { id:"G1", en:"Clarity of signage and directions in the emergency department and the hospital", ml:"എമർജൻസി വിഭാഗത്തിലും ആശുപത്രിയിലും ഉള്ള സൈൻബോർഡുകളുടെയും ദിശാസൂചനകളുടെയും വ്യക്തത", na:false },
+    { id:"G2", en:"Cleanliness and hygiene of the Emergency Department, including toilets", ml:"ടോയ്‌ലറ്റുകൾ ഉൾപ്പെടെ എമർജൻസി വിഭാഗത്തിന്റെ ശുചിത്വവും ഹൈജീനും", na:false },
+    { id:"G3", en:"The treatment area was comfortable, and you and your attendant felt safe during your stay", ml:"ചികിത്സാ സ്ഥലം സൗകര്യപ്രദമായിരുന്നു, താമസത്തിനിടെ നിങ്ങൾക്കും കൂട്ടിരിപ്പുകാരനും സുരക്ഷിതത്വം തോന്നി", na:false },
+  ]},
+  { letter:"H", en:"Admission / Transfer / Discharge", ml:"അഡ്മിഷൻ / ട്രാൻസ്ഫർ / ഡിസ്ചാർജ്", items:[
+    { id:"H1", en:"Assistance during transfers and coordination with other hospital services were smooth", ml:"ട്രാൻസ്ഫറുകൾക്കിടെയുള്ള സഹായവും മറ്റ് ആശുപത്രി സേവനങ്ങളുമായുള്ള ഏകോപനവും സുഗമമായിരുന്നു", na:true },
+    { id:"H2", en:"Helpfulness of the PRO in coordinating administrative, statutory (e.g., MLC/police) and other support arrangements during your visit, where required", ml:"ആവശ്യമുള്ളപ്പോൾ, ഭരണപരവും നിയമപരവുമായ (ഉദാ: MLC/പോലീസ്) മറ്റ് പിന്തുണാ ക്രമീകരണങ്ങൾ ഏകോപിപ്പിക്കുന്നതിൽ PRO-യുടെ സഹായമനോഭാവം", na:true },
+    { id:"H3", en:"Your discharge summary and medications were explained clearly", ml:"നിങ്ങളുടെ ഡിസ്ചാർജ് സമ്മറിയും മരുന്നുകളും വ്യക്തമായി വിശദീകരിച്ചു", na:true },
+    { id:"H4", en:"Follow-up instructions, including OPD review/appointment, were explained to you", ml:"OPD റിവ്യൂ/അപ്പോയിന്റ്മെന്റ് ഉൾപ്പെടെയുള്ള തുടർനടപടി നിർദ്ദേശങ്ങൾ നിങ്ങൾക്ക് വിശദീകരിച്ചു", na:true },
+    { id:"H5", en:"If admission was required, an inpatient bed was available within a reasonable time", ml:"അഡ്മിഷൻ ആവശ്യമായി വന്നാൽ, ന്യായമായ സമയത്തിനുള്ളിൽ ഇൻപേഷ്യന്റ് ബെഡ് ലഭ്യമായി", na:true },
+    { id:"H6", en:"Pharmacy services and bill payment at discharge were efficient", ml:"ഡിസ്ചാർജ് സമയത്തെ ഫാർമസി സേവനങ്ങളും ബിൽ പേയ്മെന്റും കാര്യക്ഷമമായിരുന്നു", na:true },
+  ]},
+  { letter:"I", en:"Overall Experience", ml:"മൊത്തത്തിലുള്ള അനുഭവം", items:[
+    { id:"I1", en:"How well you / your family / attendants were kept informed and counselled", ml:"നിങ്ങളെ / നിങ്ങളുടെ കുടുംബത്തെ / കൂട്ടിരിപ്പുകാരെ എത്രത്തോളം നന്നായി അറിയിക്കുകയും കൗൺസിലിംഗ് നൽകുകയും ചെയ്തു", na:true },
+    { id:"I2", en:"Confidence in your diagnosis, treatment and next steps on leaving the ED", ml:"എമർജൻസി വിഭാഗം വിടുമ്പോൾ നിങ്ങളുടെ രോഗനിർണയത്തിലും ചികിത്സയിലും അടുത്ത നടപടികളിലും ഉള്ള വിശ്വാസം", na:false },
+    { id:"I3", en:"Overall satisfaction with the care received", ml:"ലഭിച്ച പരിചരണത്തിലുള്ള മൊത്തത്തിലുള്ള സംതൃപ്തി", na:false },
+    { id:"I4", en:"Likelihood of recommending this Emergency Department to family and friends", ml:"ഈ എമർജൻസി വിഭാഗം കുടുംബാംഗങ്ങൾക്കും സുഹൃത്തുക്കൾക്കും ശുപാർശ ചെയ്യാനുള്ള സാധ്യത", na:false },
+  ]},
+];
+const RATING_WORDS = { 1:"Very Poor", 2:"Poor", 3:"Average", 4:"Good", 5:"Excellent" };
+function legendHtml(){ return [1,2,3,4,5].map(n => `${n} = ${RATING_WORDS[n]}`).join(' · '); }
+
+const AREAS = [
+  { code:"P1", label:"Red / Resuscitation", color:"var(--p1)", text:"#fff" },
+  { code:"P2", label:"Orange", color:"var(--p2)", text:"#1B2733" },
+  { code:"P3", label:"Yellow", color:"var(--p3)", text:"#1B2733" },
+  { code:"P4", label:"Observation / Consultation Room", color:"var(--p4)", text:"#fff" },
+];
+function areaMeta(code){ return AREAS.find(a=>a.code===code) || {label:'—', color:'#5A6878', text:'#fff'}; }
+
+/* ---------------- STORAGE (localStorage) ---------------- */
+const LS_KEY = 'prem_records_v1';
+const LS_SYNCED = 'prem_synced_ids_v1';
+const LS_GCLIENT = 'prem_gclient_id_v1';
+const LS_FOLDER = 'prem_drive_folder_id_v1';
+const LS_SHEET_ID = 'prem_sheet_id_v1';
+const LS_SHEET_URL = 'prem_sheet_url_v1';
+const LS_SHEET_ROWS = 'prem_sheet_rows_v1';
+const LS_LAST_SYNC = 'prem_last_sync_v1';
+
+function getSheetRows(){ try { return JSON.parse(localStorage.getItem(LS_SHEET_ROWS) || '{}'); } catch(e){ return {}; } }
+function setSheetRows(o){ localStorage.setItem(LS_SHEET_ROWS, JSON.stringify(o)); }
+
+function loadRecords(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(e){ return []; }
+}
+function saveRecords(list){ localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+function upsertRecord(rec){
+  const list = loadRecords();
+  const i = list.findIndex(r => r.id === rec.id);
+  if (i >= 0) list[i] = rec; else list.unshift(rec);
+  saveRecords(list);
+}
+function deleteRecordById(id){
+  saveRecords(loadRecords().filter(r => r.id !== id));
+  const synced = getSyncedIds(); delete synced[id]; setSyncedIds(synced);
+}
+function getSyncedIds(){ try { return JSON.parse(localStorage.getItem(LS_SYNCED) || '{}'); } catch(e){ return {}; } }
+function setSyncedIds(o){ localStorage.setItem(LS_SYNCED, JSON.stringify(o)); }
+
+/* ---------------- HELPERS ---------------- */
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function pad(n){ return n.toString().padStart(2,'0'); }
+function nowDateStr(){ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function nowTimeStr(){ const d=new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function genId(){
+  const d = new Date();
+  const y = d.getFullYear().toString().slice(2), m = (d.getMonth()+1).toString().padStart(2,'0');
+  const rand = Math.random().toString(36).slice(2,6).toUpperCase();
+  return `PREM-${y}${m}-${rand}`;
+}
+function fmtDT(dateStr, timeStr){
+  if (!dateStr) return '—';
+  const d = new Date(dateStr + 'T' + (timeStr||'00:00'));
+  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' + d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+function avgRating(rec){
+  const vals = Object.values(rec.ratings||{}).filter(v => v!=='na' && v);
+  if (!vals.length) return '—';
+  return (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
+}
+function hasLowScore(rec){ return Object.values(rec.ratings||{}).some(v => v===1 || v===2); }
+function showToast(msg){
+  const el = document.createElement('div');
+  el.className='toast'; el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 2200);
+}
+
+/* ---------------- STATE ---------------- */
+let state = {
+  screen: 'list', // list | form | view | settings
+  step: 0,
+  editingId: null,
+  patient: blankPatient(),
+  ratings: {},
+  freetext: blankFreetext(),
+  activeRecord: null,
+  gconnected: false,
+  gToken: null,
+  syncing: false,
+  analytics: null,
+  analyticsLoading: false,
+  analyticsError: null,
+};
+function blankPatient(){ return { date: nowDateStr(), time: nowTimeStr(), name:"", age:"", sex:"", hospNo:"", area:"", mobile:"", completedBy:"patient", relation:"" }; }
+function blankFreetext(){ return { staffName:"", staffReason:"", doctorName:"", doctorReason:"", suggestions:"", facilities:"" }; }
+function resetForm(){ state.step = 0; state.editingId = null; state.patient = blankPatient(); state.ratings = {}; state.freetext = blankFreetext(); state.showNameError = false; }
+
+/* ---------------- LIST SCREEN ---------------- */
+function renderList(){
+  const all = loadRecords();
+  let body;
+  if (!all.length){
+    body = `<div class="empty-state">No interviews recorded yet.<br/>Tap the + button to start a PREM interview.</div>`;
+  } else {
+    const groups = {};
+    all.forEach(r => { const day = r.patient.date || 'Unknown'; (groups[day] = groups[day]||[]).push(r); });
+    const days = Object.keys(groups).sort((a,b)=> b.localeCompare(a));
+    body = days.map(day => {
+      const d = new Date(day+'T00:00:00');
+      const dayLabel = isNaN(d) ? day : d.toLocaleDateString('en-IN',{weekday:'long', day:'2-digit', month:'short', year:'numeric'});
+      return `<div class="day-head">${dayLabel} · ${groups[day].length} interview${groups[day].length>1?'s':''}</div>` +
+        groups[day].map(rec => {
+          const am = areaMeta(rec.patient.area);
+          return `<div class="rec-card" onclick="openRecord('${rec.id}')">
+            <div class="rec-top">
+              <div>
+                <div class="rec-name">${esc(rec.patient.name||'Unnamed')}</div>
+                <div class="rec-meta">${esc(rec.patient.hospNo||'No hosp. no.')} · Age ${esc(rec.patient.age||'—')} · ${fmtDT(rec.patient.date, rec.patient.time)}</div>
+              </div>
+              <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+                <span class="area-chip" style="background:${am.color}; color:${am.text}">${esc(rec.patient.area||'—')}</span>
+                ${hasLowScore(rec) ? `<span class="area-chip" style="background:#B23A3A">Low score</span>` : ''}
+              </div>
+            </div>
+            <div class="rec-meta" style="margin-top:8px;">Avg rating: <b>${avgRating(rec)}</b></div>
+          </div>`;
+        }).join('');
+    }).join('');
+  }
+  return `
+  <div class="topbar">
+    <div><h1>ED-PREM Interviews</h1><div class="sub">NSMIMS · ${all.length} total on device</div></div>
+    <div style="display:flex; gap:8px;">
+      <button class="icon-btn" onclick="openAnalytics()" title="Analytics">▤</button>
+      <button class="icon-btn" onclick="goSettings()" title="Backup & Sync">⚙</button>
+    </div>
+  </div>
+  <div class="wrap">${all.length ? renderWeekChart(all) : ''}${body}</div>
+  <button class="fab" onclick="startNew()">+</button>`;
+}
+function renderWeekChart(all){
+  const days = [];
+  for (let i=6;i>=0;i--){
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const key = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    days.push({ label: d.toLocaleDateString('en-IN',{weekday:'short'}), count: all.filter(r=>r.patient.date===key).length });
+  }
+  const max = Math.max(1, ...days.map(d=>d.count));
+  return `<div class="week-chart">
+    <div class="week-chart-title">Interviews — last 7 days</div>
+    <div class="week-bars">
+      ${days.map(d => `<div class="week-bar-col">
+        <div class="week-bar-track"><div class="week-bar-fill" style="height:${Math.max(4, Math.round(d.count/max*100))}%"></div></div>
+        <div class="week-bar-count">${d.count}</div>
+        <div class="week-bar-label">${d.label}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+window.startNew = function(){ resetForm(); state.screen='form'; render(); };
+window.openRecord = function(id){
+  state.activeRecord = loadRecords().find(r=>r.id===id);
+  state.screen='view'; render();
+};
+window.goSettings = function(){ state.screen='settings'; render(); };
+
+/* ---------------- FORM: PATIENT INFO STEP ---------------- */
+function renderPatientStep(){
+  const p = state.patient;
+  return `
+  <div class="step-title">Patient Information</div>
+  <div style="margin-top:16px">
+    <div class="field"><label>Date &amp; Time of Interview</label>
+      <div class="dt-row">
+        <input type="date" style="flex:1.3" value="${esc(p.date)}" onchange="updatePatientSilent('date', this.value)" />
+        <input type="time" style="flex:1" value="${esc(p.time)}" onchange="updatePatientSilent('time', this.value)" />
+      </div>
+    </div>
+    <div class="field"><label>Patient Name <span style="color:#C0392B">*</span></label>
+      <input type="text" value="${esc(p.name)}" oninput="updatePatientSilent('name', this.value)" />
+      ${state.showNameError ? `<p style="color:#C0392B; font-size:12.5px; margin:6px 0 0;">Name is required</p>` : ''}
+    </div>
+    <div style="display:flex; gap:12px;">
+      <div class="field" style="flex:1"><label>Age</label>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" value="${esc(p.age)}" oninput="updatePatientNumeric('age', this.value)" placeholder="e.g. 45" /></div>
+      <div class="field" style="flex:1.3"><label>Sex</label>
+        <div class="seg">
+          <button type="button" class="${p.sex==='M'?'active':''}" onclick="updatePatient('sex','M')">Male</button>
+          <button type="button" class="${p.sex==='F'?'active':''}" onclick="updatePatient('sex','F')">Female</button>
+        </div>
+      </div>
+    </div>
+    <div class="field"><label>Hospital Number</label>
+      <input type="text" inputmode="numeric" pattern="[0-9]*" value="${esc(p.hospNo)}" oninput="updatePatientNumeric('hospNo', this.value)" /></div>
+    <div class="field"><label>Area of the ED</label>
+      <div class="area-grid">
+        ${AREAS.map(a => `
+          <button type="button" class="area-btn ${p.area===a.code?'sel':''}" onclick="updatePatient('area','${a.code}')">
+            <span class="pnum" style="background:${a.color}; color:${a.text}">${a.code}</span>
+            <div class="plabel">${a.label}</div>
+          </button>`).join('')}
+      </div>
+    </div>
+    <div class="field"><label>Mobile Number</label>
+      <div class="phone-row">
+        <div class="phone-prefix">+91-</div>
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="10" value="${esc(p.mobile)}" oninput="updateContactNumeric(this.value)" placeholder="10-digit number" />
+      </div>
+    </div>
+    <div class="field"><label>Interviewed</label>
+      <div class="seg">
+        <button type="button" class="${p.completedBy==='patient'?'active':''}" onclick="updatePatient('completedBy','patient')">Patient</button>
+        <button type="button" class="${p.completedBy==='attendant'?'active':''}" onclick="updatePatient('completedBy','attendant')">Attendant</button>
+      </div>
+    </div>
+    ${p.completedBy==='attendant' ? `
+    <div class="field"><label>Attendant's Relation to Patient</label>
+      <input type="text" value="${esc(p.relation)}" oninput="updatePatientSilent('relation', this.value)" /></div>` : ''}
+  </div>
+  <div class="freetext-box" style="margin-top:8px; background:#EEF3F8; border-color:#D3E0EE;">
+    <p style="font-size:12.5px; color:#4B5A6B; margin:0; line-height:1.5;">Responses are confidential and used solely for internal quality improvement by the ED Quality Committee.</p>
+  </div>`;
+}
+window.updatePatient = function(k,v){ state.patient[k]=v; render(); };
+window.updatePatientSilent = function(k,v){ state.patient[k]=v; };
+window.updatePatientNumeric = function(k,v){
+  const digitsOnly = v.replace(/[^0-9]/g, '');
+  state.patient[k] = digitsOnly;
+  if (digitsOnly !== v){ const el = document.activeElement; if (el && el.tagName === 'INPUT') el.value = digitsOnly; }
+};
+window.updateContactNumeric = function(v){
+  const digitsOnly = v.replace(/[^0-9]/g, '').slice(0, 10);
+  state.patient.mobile = digitsOnly;
+  if (digitsOnly !== v){ const el = document.activeElement; if (el && el.tagName === 'INPUT') el.value = digitsOnly; }
+};
+
+function ratingWidget(item){
+  const cur = state.ratings[item.id];
+  let btns = '';
+  if (item.na) btns += `<button type="button" class="rate-btn na ${cur==='na'?'sel':''}" onclick="setRating('${item.id}','na')">N/A</button>`;
+  for (let n=1;n<=5;n++) btns += `<button type="button" class="rate-btn ${cur===n?'sel':''}" data-v="${n}" onclick="setRating('${item.id}',${n})">${n}</button>`;
+  return `<div class="rate-row">${btns}</div>`;
+}
+window.setRating = function(id, val){ state.ratings[id] = val; render(); };
+
+function renderDomainStep(domain){
+  return `
+  <div class="step-title">${domain.letter}. ${esc(domain.en)}</div>
+  <div class="legend-strip">${legendHtml()}</div>
+  <div style="margin-top:14px">
+  ${domain.items.map(item => `
+    <div class="item-card">
+      <div class="item-text-en">${esc(item.en)}</div>
+      <div class="item-text-ml ml">${esc(item.ml)}</div>
+      ${ratingWidget(item)}
+    </div>`).join('')}
+  </div>`;
+}
+
+function renderAdditionalStep(){
+  const f = state.freetext;
+  return `
+  <div class="step-title">Additional Feedback</div>
+  <div class="freetext-box" style="margin-top:16px">
+    <h3>Recognition of Outstanding Staff and Doctors</h3>
+    <div class="field" style="margin-top:10px"><label>Staff — Name(s)</label>
+      <input type="text" value="${esc(f.staffName)}" oninput="updateFreeSilent('staffName', this.value)" /></div>
+    <div class="field"><label>Reason</label>
+      <input type="text" value="${esc(f.staffReason)}" oninput="updateFreeSilent('staffReason', this.value)" /></div>
+    <div class="field"><label>Doctor — Name(s)</label>
+      <input type="text" value="${esc(f.doctorName)}" oninput="updateFreeSilent('doctorName', this.value)" /></div>
+    <div class="field" style="margin-bottom:0"><label>Reason</label>
+      <input type="text" value="${esc(f.doctorReason)}" oninput="updateFreeSilent('doctorReason', this.value)" /></div>
+  </div>
+  <div class="freetext-box">
+    <h3>Suggestions / Complaints</h3>
+    <div class="field" style="margin-top:10px; margin-bottom:0"><textarea oninput="updateFreeSilent('suggestions', this.value)">${esc(f.suggestions)}</textarea></div>
+  </div>
+  <div class="freetext-box">
+    <h3>Facilities You Would Like Us to Add</h3>
+    <div class="field" style="margin-top:10px; margin-bottom:0"><textarea oninput="updateFreeSilent('facilities', this.value)">${esc(f.facilities)}</textarea></div>
+  </div>`;
+}
+window.updateFreeSilent = function(k,v){ state.freetext[k]=v; };
+
+function totalSteps(){ return DOMAINS.length + 2; }
+function stepProgressPct(){ return Math.round(((state.step+1)/totalSteps())*100); }
+
+function renderForm(){
+  let body;
+  if (state.step === 0) body = renderPatientStep();
+  else if (state.step >= 1 && state.step <= DOMAINS.length) body = renderDomainStep(DOMAINS[state.step-1]);
+  else body = renderAdditionalStep();
+  const isLast = state.step === totalSteps()-1;
+  const isFirst = state.step === 0;
+  return `
+  <div class="progress-bar-outer">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+      <span class="back" onclick="cancelForm()">‹ Cancel</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${stepProgressPct()}%"></div></div>
+    <div class="progress-label"><span>Step ${state.step+1} of ${totalSteps()}</span><span>${stepProgressPct()}%</span></div>
+  </div>
+  <div class="wrap">${body}</div>
+  <div class="nav-bar"><div class="inner">
+    ${!isFirst ? `<button class="btn btn-ghost" onclick="stepBack()">Back</button>` : ''}
+    <button class="btn btn-primary" onclick="${isLast ? 'submitForm()' : 'stepNext()'}">${isLast ? 'Save Interview' : 'Next'}</button>
+  </div></div>`;
+}
+window.cancelForm = function(){
+  if (confirm('Discard this interview entry?')){ state.screen='list'; render(); }
+};
+window.stepNext = function(){
+  if (state.step === 0 && !state.patient.name.trim()){ state.showNameError = true; render(); return; }
+  state.showNameError = false;
+  if (state.step < totalSteps()-1){ state.step++; window.scrollTo(0,0); render(); }
+};
+window.stepBack = function(){ if (state.step > 0){ state.step--; window.scrollTo(0,0); render(); } };
+window.submitForm = function(){
+  const id = state.editingId || genId();
+  const record = {
+    id, serial: id,
+    timestamp: Date.now(),
+    patient: state.patient,
+    ratings: state.ratings,
+    freetext: state.freetext,
+  };
+  upsertRecord(record);
+  showToast('Interview saved on this device');
+  state.screen = 'list';
+  window.scrollTo(0,0);
+  render();
+};
+
+/* ---------------- VIEW / EDIT RECORD ---------------- */
+function renderView(){
+  const rec = state.activeRecord;
+  if (!rec) return `<div class="wrap"><p>Record not found.</p></div>`;
+  const p = rec.patient;
+  const am = areaMeta(p.area);
+  let ratingsHtml = '';
+  DOMAINS.forEach(dom => {
+    ratingsHtml += `<div class="section-h">${dom.letter}. ${esc(dom.en)}</div>`;
+    dom.items.forEach(item => {
+      const v = rec.ratings[item.id];
+      ratingsHtml += `<div class="kv"><span class="k">${esc(item.en)}</span><span class="v"><b>${v==='na'?'N/A':(v||'—')}</b></span></div>`;
+    });
+  });
+  return `
+  <div class="topbar">
+    <span class="back" onclick="backToList()">‹ List</span>
+    <h1 style="font-size:15px;">${rec.serial}</h1>
+    <span class="back" onclick="window.print()">Print</span>
+  </div>
+  <div class="wrap" style="padding-top:16px">
+    <div class="section-h">Patient Information</div>
+    <div class="kv"><span class="k">Date &amp; Time</span><span class="v">${fmtDT(p.date, p.time)}</span></div>
+    <div class="kv"><span class="k">Name</span><span class="v">${esc(p.name)||'—'}</span></div>
+    <div class="kv"><span class="k">Age / Sex</span><span class="v">${esc(p.age)||'—'} / ${p.sex==='M'?'Male':(p.sex==='F'?'Female':'—')}</span></div>
+    <div class="kv"><span class="k">Hospital Number</span><span class="v">${esc(p.hospNo)||'—'}</span></div>
+    <div class="kv"><span class="k">ED Area</span><span class="v"><span class="area-chip" style="background:${am.color}; color:${am.text}">${esc(p.area)||'—'} · ${am.label}</span></span></div>
+    <div class="kv"><span class="k">Mobile</span><span class="v">${p.mobile ? ('+91-'+esc(p.mobile)) : '—'}</span></div>
+    <div class="kv"><span class="k">Interviewed</span><span class="v">${p.completedBy==='attendant' ? 'Attendant ('+esc(p.relation||'—')+')' : 'Patient'}</span></div>
+
+    ${ratingsHtml}
+
+    <div class="section-h">Recognition</div>
+    <div class="kv"><span class="k">Staff</span><span class="v">${esc(rec.freetext.staffName)||'—'} — ${esc(rec.freetext.staffReason)||'—'}</span></div>
+    <div class="kv"><span class="k">Doctor</span><span class="v">${esc(rec.freetext.doctorName)||'—'} — ${esc(rec.freetext.doctorReason)||'—'}</span></div>
+    <div class="section-h">Suggestions / Complaints</div>
+    <p style="font-size:14px; margin:0 0 10px;">${esc(rec.freetext.suggestions)||'—'}</p>
+    <div class="section-h">Facilities Requested</div>
+    <p style="font-size:14px; margin:0 0 10px;">${esc(rec.freetext.facilities)||'—'}</p>
+
+    <div style="display:flex; gap:10px; margin-top:24px;">
+      <button class="btn btn-ghost" style="flex:1" onclick="editRecord('${rec.id}')">Edit</button>
+      <button class="btn btn-danger" style="flex:1" onclick="confirmDelete('${rec.id}')">Delete</button>
+    </div>
+  </div>`;
+}
+window.backToList = function(){ state.screen='list'; state.activeRecord=null; render(); };
+window.editRecord = function(id){
+  const rec = loadRecords().find(r=>r.id===id);
+  if (!rec) return;
+  state.editingId = id;
+  state.patient = Object.assign(blankPatient(), rec.patient);
+  state.ratings = Object.assign({}, rec.ratings);
+  state.freetext = Object.assign(blankFreetext(), rec.freetext);
+  state.step = 0;
+  state.screen = 'form';
+  render();
+};
+window.confirmDelete = function(id){
+  if (confirm('Delete this interview record? This cannot be undone.')){
+    deleteRecordById(id);
+    showToast('Record deleted');
+    state.screen='list'; state.activeRecord=null; render();
+  }
+};
+
+/* ---------------- SETTINGS: BACKUP + GOOGLE DRIVE SYNC ---------------- */
+function csvEscape(v){
+  const s = (v==null?'':String(v));
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+function sheetColumns(){ return DOMAINS.flatMap(d => d.items.map(i => i.id)); }
+function sheetHeader(){
+  const itemIds = sheetColumns();
+  return ['Serial','Date','Time','Name','Age','Sex','HospitalNumber','Area','Mobile','InterviewedBy','Relation',
+    ...itemIds, 'StaffName','StaffReason','DoctorName','DoctorReason','Suggestions','FacilitiesRequested'];
+}
+function recordRow(r){
+  const itemIds = sheetColumns();
+  const p = r.patient;
+  const base = [r.serial, p.date, p.time, p.name, p.age, p.sex, p.hospNo, p.area, p.mobile, p.completedBy, p.relation];
+  const ratings = itemIds.map(id => r.ratings[id]==null ? '' : r.ratings[id]);
+  const ft = [r.freetext.staffName, r.freetext.staffReason, r.freetext.doctorName, r.freetext.doctorReason, r.freetext.suggestions, r.freetext.facilities];
+  return [...base, ...ratings, ...ft];
+}
+function buildCsv(records){
+  const header = sheetHeader();
+  const rows = records.map(r => recordRow(r).map(csvEscape).join(','));
+  return [header.join(','), ...rows].join('\r\n');
+}
+function downloadBlob(content, filename, mime){
+  const blob = new Blob([content], {type: mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+}
+window.exportJson = function(){
+  const all = loadRecords();
+  downloadBlob(JSON.stringify(all, null, 2), `PREM_backup_${nowDateStr()}.json`, 'application/json');
+  showToast('Backup file downloaded');
+};
+window.exportCsv = function(){
+  const all = loadRecords();
+  downloadBlob(buildCsv(all), `PREM_consolidated_${nowDateStr()}.csv`, 'text/csv');
+  showToast('CSV downloaded');
+};
+window.triggerImport = function(){ document.getElementById('importFile').click(); };
+document.getElementById('importFile').addEventListener('change', function(e){
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try {
+      const incoming = JSON.parse(reader.result);
+      if (!Array.isArray(incoming)) throw new Error('bad format');
+      const existing = loadRecords();
+      const byId = {}; existing.forEach(r => byId[r.id] = r);
+      incoming.forEach(r => byId[r.id] = r);
+      saveRecords(Object.values(byId));
+      showToast(`Imported ${incoming.length} record(s)`);
+      render();
+    } catch(err){ showToast('Import failed: invalid file'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* ---- Google Drive (on-demand backup, drive.file scope) ---- */
+let tokenClient = null;
+function ensureGis(cb){
+  if (window.google && google.accounts && google.accounts.oauth2){ cb(); return; }
+  setTimeout(()=> ensureGis(cb), 300);
+}
+window.saveClientId = function(val){
+  localStorage.setItem(LS_GCLIENT, val.trim());
+  showToast('Client ID saved');
+};
+function getClientId(){ return localStorage.getItem(LS_GCLIENT) || ''; }
+
+// interactive=false tries a silent (no-popup) token refresh — only succeeds if this
+// browser already granted consent before. interactive=true shows the Google sign-in popup.
+function getToken(interactive){
+  return new Promise((resolve, reject) => {
+    const clientId = getClientId();
+    if (!clientId){ reject('no-client-id'); return; }
+    ensureGis(function(){
+      const tc = google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets',
+        callback: (resp) => {
+          if (resp && resp.access_token){
+            state.gToken = resp.access_token; state.gconnected = true;
+            resolve(resp.access_token);
+          } else reject('no-token');
+        },
+        error_callback: () => reject('error'),
+      });
+      tc.requestAccessToken({ prompt: interactive ? 'consent' : '' });
+    });
+  });
+}
+window.connectDrive = function(){
+  if (!getClientId()){ showToast('Enter your Google Client ID first'); return; }
+  getToken(true).then(() => { showToast('Connected to Google Drive'); render(); })
+    .catch(() => showToast('Google sign-in failed'));
+};
+// Auto-sync: on app open, if it's been a while since the last sync and this browser
+// already has consent on file, sync quietly in the background — no popup, no toast
+// unless it actually runs. Never interrupts her with a sign-in prompt on open.
+function maybeAutoSync(){
+  if (!getClientId()) return;
+  const last = Number(localStorage.getItem(LS_LAST_SYNC) || 0);
+  if (Date.now() - last < 12*60*60*1000) return;
+  getToken(false).then(() => syncToDrive()).catch(() => { /* no cached consent yet — skip silently */ });
+}
+
+async function driveFindOrCreateFolder(name){
+  const q = encodeURIComponent(`name='${name.replace(/'/g,"\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, {
+    headers: { Authorization: `Bearer ${state.gToken}` }
+  });
+  const data = await res.json();
+  if (data.files && data.files.length) return data.files[0].id;
+  const createRes = await fetch('https://www.googleapis.com/drive/v3/files', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${state.gToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, mimeType: 'application/vnd.google-apps.folder' })
+  });
+  const created = await createRes.json();
+  return created.id;
+}
+async function driveFindFile(name, parentId){
+  const q = encodeURIComponent(`name='${name.replace(/'/g,"\\'")}' and '${parentId}' in parents and trashed=false`);
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, {
+    headers: { Authorization: `Bearer ${state.gToken}` }
+  });
+  const data = await res.json();
+  return (data.files && data.files.length) ? data.files[0].id : null;
+}
+async function driveUploadOrUpdate(name, parentId, content, mime){
+  const existingId = await driveFindFile(name, parentId);
+  const metadata = existingId ? {} : { name, parents: [parentId] };
+  const boundary = 'premBoundary' + Date.now();
+  const body =
+    `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n` +
+    `--${boundary}\r\nContent-Type: ${mime}\r\n\r\n${content}\r\n--${boundary}--`;
+  const url = existingId
+    ? `https://www.googleapis.com/upload/drive/v3/files/${existingId}?uploadType=multipart`
+    : `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
+  await fetch(url, {
+    method: existingId ? 'PATCH' : 'POST',
+    headers: { Authorization: `Bearer ${state.gToken}`, 'Content-Type': `multipart/related; boundary=${boundary}` },
+    body
+  });
+}
+/* ---- Google Sheets (live spreadsheet, appended/updated on sync) ---- */
+async function sheetsApi(path, opts){
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${path}`, Object.assign({
+    headers: Object.assign({ Authorization: `Bearer ${state.gToken}` }, (opts&&opts.json) ? {'Content-Type':'application/json'} : {})
+  }, opts||{}));
+  return res.json();
+}
+async function ensureSpreadsheet(folderId){
+  let id = localStorage.getItem(LS_SHEET_ID);
+  if (id){
+    // confirm it still exists / is reachable
+    const check = await sheetsApi(id);
+    if (check && check.spreadsheetId) return id;
+  }
+  const created = await fetch('https://sheets.googleapis.com/v4/spreadsheets', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${state.gToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ properties: { title: 'NSMIMS ED-PREM Live Log' } })
+  }).then(r=>r.json());
+  id = created.spreadsheetId;
+  // move into the PREM data folder
+  try {
+    const meta = await fetch(`https://www.googleapis.com/drive/v3/files/${id}?fields=parents`, { headers:{ Authorization:`Bearer ${state.gToken}` } }).then(r=>r.json());
+    const prevParents = (meta.parents||[]).join(',');
+    await fetch(`https://www.googleapis.com/drive/v3/files/${id}?addParents=${folderId}${prevParents?('&removeParents='+prevParents):''}&fields=id,parents`, {
+      method: 'PATCH', headers: { Authorization: `Bearer ${state.gToken}` }
+    });
+  } catch(e){ /* non-fatal: sheet still works, just not filed in the folder */ }
+  localStorage.setItem(LS_SHEET_ID, id);
+  localStorage.setItem(LS_SHEET_URL, `https://docs.google.com/spreadsheets/d/${id}/edit`);
+  setSheetRows({});
+  return id;
+}
+async function ensureSheetHeader(sheetId){
+  const check = await sheetsApi(`${sheetId}/values/Sheet1!A1`, {});
+  if (check.values && check.values.length) return;
+  await sheetsApi(`${sheetId}/values/Sheet1!A1?valueInputOption=RAW`, {
+    method: 'PUT', json:true, body: JSON.stringify({ values: [sheetHeader()] })
+  });
+}
+async function upsertSheetRows(sheetId, records){
+  const rowsMap = getSheetRows();
+  for (const rec of records){
+    const rowVals = recordRow(rec);
+    if (rowsMap[rec.id]){
+      const rowNum = rowsMap[rec.id];
+      await sheetsApi(`${sheetId}/values/Sheet1!A${rowNum}?valueInputOption=RAW`, {
+        method: 'PUT', json:true, body: JSON.stringify({ values: [rowVals] })
+      });
+    } else {
+      const resp = await sheetsApi(`${sheetId}/values/Sheet1!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
+        method: 'POST', json:true, body: JSON.stringify({ values: [rowVals] })
+      });
+      const range = resp.updates && resp.updates.updatedRange; // e.g. "Sheet1!A5:X5"
+      const m = range && range.match(/![A-Z]+(\d+)/);
+      if (m) rowsMap[rec.id] = parseInt(m[1], 10);
+    }
+  }
+  setSheetRows(rowsMap);
+}
+
+window.syncToDrive = async function(){
+  if (!state.gToken){ showToast('Connect to Google Drive first'); return; }
+  state.syncing = true; render();
+  try {
+    const all = loadRecords();
+    const rootFolder = await driveFindOrCreateFolder('NSMIMS ED-PREM Data');
+    // Consolidated CSV — one running file, updated in place
+    await driveUploadOrUpdate('PREM_Consolidated_AllData.csv', rootFolder, buildCsv(all), 'text/csv');
+    // Today's consolidated CSV snapshot
+    const today = nowDateStr();
+    const todayRecs = all.filter(r => r.patient.date === today);
+    if (todayRecs.length){
+      await driveUploadOrUpdate(`PREM_Consolidated_${today}.csv`, rootFolder, buildCsv(todayRecs), 'text/csv');
+    }
+    // Per-case JSON for any record not yet synced
+    const casesFolderId = await driveFindOrCreateFolder('Per-Case Records');
+    const synced = getSyncedIds();
+    let uploaded = 0;
+    for (const rec of all){
+      if (synced[rec.id]) continue;
+      await driveUploadOrUpdate(`${rec.serial}.json`, casesFolderId, JSON.stringify(rec, null, 2), 'application/json');
+      synced[rec.id] = true;
+      uploaded++;
+    }
+    setSyncedIds(synced);
+    // Live Google Sheet: header row + one row per record, updated in place on re-sync
+    const sheetId = await ensureSpreadsheet(rootFolder);
+    await ensureSheetHeader(sheetId);
+    await upsertSheetRows(sheetId, all);
+    state.gconnected = true;
+    localStorage.setItem(LS_LAST_SYNC, String(Date.now()));
+    showToast(`Synced. ${uploaded} new case file(s), CSVs and live Sheet updated.`);
+  } catch(e){
+    showToast('Sync failed — check connection and try again');
+  }
+  state.syncing = false; render();
+};
+
+/* ---------------- ANALYTICS (reads the live Google Sheet, not local storage) ---------------- */
+async function fetchSheetRows(){
+  const sheetId = localStorage.getItem(LS_SHEET_ID);
+  if (!sheetId) return [];
+  const res = await sheetsApi(`${sheetId}/values/Sheet1`, {});
+  if (!res.values || res.values.length < 2) return [];
+  const header = res.values[0];
+  const idxOf = {}; header.forEach((h,i) => idxOf[h] = i);
+  const itemIds = sheetColumns();
+  return res.values.slice(1).map(row => {
+    const ratings = {};
+    itemIds.forEach(id => {
+      const v = row[idxOf[id]];
+      ratings[id] = (v === undefined || v === '') ? undefined : (v === 'na' ? 'na' : Number(v));
+    });
+    return { serial: row[idxOf['Serial']], ratings };
+  });
+}
+function computeQuestionStats(rows){
+  const stats = {};
+  sheetColumns().forEach(id => {
+    const vals = rows.map(r => r.ratings[id]).filter(v => typeof v === 'number' && !isNaN(v));
+    const naCount = rows.filter(r => r.ratings[id] === 'na').length;
+    const answered = vals.length;
+    const sorted = [...vals].sort((a,b) => a-b);
+    const median = answered ? (answered%2 ? sorted[(answered-1)/2] : (sorted[answered/2-1]+sorted[answered/2])/2) : null;
+    const pct = (pred) => answered ? Math.round(100*vals.filter(pred).length/answered) : null;
+    stats[id] = {
+      mean: answered ? vals.reduce((a,b)=>a+b,0)/answered : null,
+      median, answered, na: naCount,
+      pct5: pct(v=>v===5), pct4plus: pct(v=>v>=4), pct2minus: pct(v=>v<=2),
+      responseRate: (answered+naCount) ? Math.round(100*answered/(answered+naCount)) : null,
+    };
+  });
+  return stats;
+}
+function computeDomainScores(stats){
+  return DOMAINS.map(d => {
+    const means = d.items.map(i => stats[i.id].mean).filter(m => m != null);
+    return { letter: d.letter, name: d.en, score: means.length ? means.reduce((a,b)=>a+b,0)/means.length : null };
+  });
+}
+function allItemsFlat(){ return DOMAINS.flatMap(d => d.items.map(i => ({ ...i, domain: d.letter }))); }
+
+window.openAnalytics = function(){
+  state.screen = 'analytics';
+  render();
+  loadAnalytics();
+};
+window.loadAnalytics = async function(){
+  state.analyticsLoading = true; state.analyticsError = null; render();
+  try {
+    if (!state.gToken){ await getToken(false).catch(() => getToken(true)); }
+    const rows = await fetchSheetRows();
+    const stats = computeQuestionStats(rows);
+    state.analytics = { rows, stats, domains: computeDomainScores(stats), n: rows.length, loadedAt: Date.now() };
+  } catch(e){
+    state.analyticsError = 'Could not load analytics — connect to Google Drive first (see Settings) and make sure at least one sync has run.';
+  }
+  state.analyticsLoading = false; render();
+};
+
+function renderAnalytics(){
+  let body;
+  if (state.analyticsLoading){
+    body = `<div class="loading">Loading from the live Sheet…</div>`;
+  } else if (state.analyticsError){
+    body = `<div class="empty-state">${esc(state.analyticsError)}</div>`;
+  } else if (!state.analytics || !state.analytics.n){
+    body = `<div class="empty-state">No synced interviews found yet.<br/>Sync at least once from Settings, then reload analytics.</div>`;
+  } else {
+    const a = state.analytics;
+    const items = allItemsFlat();
+    const ranked = items.map(i => ({ ...i, m: a.stats[i.id] }))
+      .filter(i => i.m.answered > 0)
+      .sort((x,y) => x.m.mean - y.m.mean);
+    const worst10 = ranked.slice(0, 10);
+    const best10 = ranked.slice(-10).reverse();
+
+    body = `
+    <div class="settings-card">
+      <h3>Domain scores</h3>
+      <p>Mean of each domain's item scores, 0–5 scale. Based on ${a.n} synced interview${a.n===1?'':'s'}.</p>
+      ${a.domains.map(d => `
+        <div class="domain-bar-row">
+          <div class="domain-bar-label"><span>${d.letter}. ${esc(d.name)}</span><b>${d.score!=null ? d.score.toFixed(1) : '—'}</b></div>
+          <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${d.score!=null ? (d.score/5*100) : 0}%"></div></div>
+        </div>`).join('')}
+    </div>
+
+    <div class="settings-card">
+      <h3>Top 10 lowest-scoring questions</h3>
+      <p>Sorted by mean score. Small n means treat with caution.</p>
+      ${worst10.map(i => `<div class="q-row"><span class="qtext">${i.domain}. ${esc(i.en)}</span><span class="qmean">${i.m.mean.toFixed(1)} <span style="color:var(--muted); font-weight:400;">(n=${i.m.answered})</span></span></div>`).join('')}
+    </div>
+
+    <div class="settings-card">
+      <h3>Top 10 highest-scoring questions</h3>
+      ${best10.map(i => `<div class="q-row"><span class="qtext">${i.domain}. ${esc(i.en)}</span><span class="qmean">${i.m.mean.toFixed(1)} <span style="color:var(--muted); font-weight:400;">(n=${i.m.answered})</span></span></div>`).join('')}
+    </div>
+
+    <div class="settings-card">
+      <h3>Per-question detail</h3>
+      <p>Response rate = answered ÷ (answered + N/A), i.e. of those for whom the question applied.</p>
+      <div class="stats-table-wrap"><table class="stats-table">
+        <thead><tr><th>Question</th><th>Mean</th><th>Median</th><th>%5</th><th>%≥4</th><th>%≤2</th><th>Ans.</th><th>N/A</th><th>Resp.%</th></tr></thead>
+        <tbody>
+          ${items.map(i => { const s = a.stats[i.id]; return `<tr>
+            <td>${i.id}</td>
+            <td>${s.mean!=null?s.mean.toFixed(2):'—'}</td>
+            <td>${s.median!=null?s.median.toFixed(1):'—'}</td>
+            <td>${s.pct5!=null?s.pct5+'%':'—'}</td>
+            <td>${s.pct4plus!=null?s.pct4plus+'%':'—'}</td>
+            <td>${s.pct2minus!=null?s.pct2minus+'%':'—'}</td>
+            <td>${s.answered}</td>
+            <td>${s.na}</td>
+            <td>${s.responseRate!=null?s.responseRate+'%':'—'}</td>
+          </tr>`; }).join('')}
+        </tbody>
+      </table></div>
+    </div>`;
+  }
+  return `
+  <div class="topbar">
+    <span class="back" onclick="backToList()">‹ List</span>
+    <h1 style="font-size:15px;">Analytics</h1>
+    <span class="back" onclick="loadAnalytics()">Reload</span>
+  </div>
+  <div class="wrap" style="padding-top:16px">${body}</div>`;
+}
+
+function renderSettings(){
+  const clientId = getClientId();
+  const all = loadRecords();
+  return `
+  <div class="topbar">
+    <span class="back" onclick="backToList()">‹ Back</span>
+    <h1 style="font-size:15px;">Backup &amp; Sync</h1>
+    <span style="width:40px"></span>
+  </div>
+  <div class="wrap" style="padding-top:16px">
+
+    <div class="settings-card">
+      <h3>Device backup</h3>
+      <p>Download all ${all.length} record(s) stored on this device. Keep this file safe — it lets you restore data if the app or phone is reset.</p>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-ghost" style="flex:1" onclick="exportJson()">Export JSON</button>
+        <button class="btn btn-ghost" style="flex:1" onclick="exportCsv()">Export CSV</button>
+      </div>
+      <button class="btn btn-ghost btn-full" style="margin-top:10px;" onclick="triggerImport()">Restore from JSON backup</button>
+    </div>
+
+    <div class="settings-card">
+      <h3>Google Drive sync (on-demand)</h3>
+      <p>Each sync writes a consolidated CSV (all data + today's data), one JSON file per interview, and updates a live "NSMIMS ED-PREM Live Log" Google Sheet — all inside a "NSMIMS ED-PREM Data" folder in your Google Drive. Nothing syncs automatically — tap "Sync now" whenever you want.</p>
+      ${!clientId ? `
+        <div class="field"><label>Google OAuth Client ID (one-time setup)</label>
+          <input type="text" id="clientIdInput" placeholder="xxxxxxxx.apps.googleusercontent.com" />
+        </div>
+        <button class="btn btn-ghost btn-full" onclick="saveClientId(document.getElementById('clientIdInput').value); render();">Save Client ID</button>
+      ` : `
+        <div class="kv"><span class="k">Client ID</span><span class="v" style="font-size:12px;">${esc(clientId.slice(0,18))}…</span></div>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button class="btn btn-ghost" style="flex:1" onclick="connectDrive()">${state.gconnected ? 'Reconnect' : 'Connect Google Drive'}</button>
+          <button class="btn btn-primary" style="flex:1" onclick="syncToDrive()" ${state.syncing?'disabled':''}>${state.syncing ? 'Syncing…' : 'Sync now'}</button>
+        </div>
+        <p style="margin-top:10px;"><span class="status-dot" style="background:${state.gconnected?'var(--ok)':'#B7C3D1'}"></span>${state.gconnected ? 'Connected for this session' : 'Not connected — tap Connect Google Drive'}</p>
+        ${localStorage.getItem(LS_SHEET_URL) ? `<p style="margin-top:6px;"><a href="${esc(localStorage.getItem(LS_SHEET_URL))}" target="_blank" style="color:var(--navy); font-size:13px;">Open live Sheet ↗</a></p>` : ''}
+        <button class="back" style="font-size:12px; margin-top:4px;" onclick="localStorage.removeItem('${LS_GCLIENT}'); render();">Change Client ID</button>
+      `}
+    </div>
+
+    <div class="settings-card">
+      <h3>About this app</h3>
+      <p>NSMIMS ED-PREM Interview Entry — for use by the ED Medical Social Worker to record patient/attendant PREM feedback during a face-to-face interview. Works fully offline; data stays on this device until you back it up or sync to Drive.</p>
+    </div>
+  </div>`;
+}
+
+/* ---------------- ROOT RENDER ---------------- */
+function render(){
+  const root = document.getElementById('root');
+  let html = '';
+  switch(state.screen){
+    case 'list': html = renderList(); break;
+    case 'form': html = renderForm(); break;
+    case 'view': html = renderView(); break;
+    case 'settings': html = renderSettings(); break;
+    case 'analytics': html = renderAnalytics(); break;
+    default: html = renderList();
+  }
+  root.innerHTML = html;
+}
+render();
+maybeAutoSync();
+</script>
+</body>
+</html>
